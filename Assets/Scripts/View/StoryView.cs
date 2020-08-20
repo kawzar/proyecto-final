@@ -24,12 +24,16 @@ public class StoryView : MonoBehaviour
     [SerializeField]
     private ScrollRect scrollView;
 
-    private StoryPresenter presenter;
+    [SerializeField]
+    private Button backButton;
 
-    public void InjectPresenter(StoryPresenter storyPresenter)
+    private IStoryPresenter presenter;
+
+    public void InjectPresenter(IStoryPresenter storyPresenter)
     {
         presenter = storyPresenter;
         optionsPanel.InjectPresenter(presenter);
+        backButton.onClick.AddListener(() => presenter.ReceiveCloseAction());
     }
 
     private void Update()
@@ -68,5 +72,11 @@ public class StoryView : MonoBehaviour
     public void HideOptions()
     {
         optionsPanel.Hide();
+    }
+
+    public void CloseConversation()
+    {
+        presenter.ReceiveCloseAction();
+        gameObject.SetActive(false);
     }
 }

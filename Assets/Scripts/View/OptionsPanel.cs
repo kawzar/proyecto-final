@@ -20,11 +20,11 @@ public class OptionsPanel : MonoBehaviour
 
     [SerializeField]
     private float fadeTime = 0.25f;
-                                             
-    private StoryPresenter storyPresenter;
+
+    private IStoryPresenter storyPresenter;
 
     // TODO: review if this is a valid option to inject presenter
-    public void InjectPresenter(StoryPresenter storyPresenter)
+    public void InjectPresenter(IStoryPresenter storyPresenter)
     {
         this.storyPresenter = storyPresenter;
     }

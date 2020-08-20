@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Ink.Runtime;
 using UnityEngine;
 
-public class StoryPresenter
+public class StoryPresenter : IStoryPresenter
 {
     private Story story;
     private StoryView view;
@@ -14,6 +15,8 @@ public class StoryPresenter
         this.story = story;
         this.view = storyView;
     }
+
+    public event Action Closed;
 
     public void ContinueStory()
     {
@@ -33,11 +36,16 @@ public class StoryPresenter
         }
     }
 
-    public void ReceiveChoise(Choice choice)
+    public void ReceiveChoice(Choice choice)
     {
         story.ChooseChoiceIndex(choice.index);
         view.HideOptions();
         view.CreateTextBubble(choice.text, true);
         ContinueStory();
+    }
+
+    public void ReceiveCloseAction()
+    {
+        Closed?.Invoke();
     }
 }

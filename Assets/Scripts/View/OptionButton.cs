@@ -16,13 +16,13 @@ public class OptionButton : MonoBehaviour
     private Choice _choice;
 
 
-    public void SetupOption(Choice choice, StoryPresenter storyPresenter)
+    public void SetupOption(Choice choice, IStoryPresenter storyPresenter)
     {
         _choice = choice;
         _text.SetText(choice.text);
         _button.onClick.AddListener(() =>
         {
-            storyPresenter.ReceiveChoise(_choice);
+            storyPresenter.ReceiveChoice(_choice);
         });
     }
 }

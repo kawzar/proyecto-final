@@ -11,8 +11,17 @@ public class Context : MonoBehaviour
     [SerializeField]
     private StoryView storyView;
 
+    [SerializeField]
+    private MessageListView messageListView;
+
+    private IMessagingService messagingService;
+
     private void Awake()
     {
-        storyView.InjectPresenter(new StoryPresenter(storyView, new Story(storyTextAsset.text)));
+        IStoryPresenter storyPresenter = new StoryPresenter(storyView, new Story(storyTextAsset.text));
+        IMessageListPresenter messageListPresenter = new MessageListPresenter(messageListView);
+        storyView.InjectPresenter(storyPresenter);
+        messageListView.InjectPresenter(messageListPresenter);
+        messagingService = new MessagingService(storyPresenter, messageListPresenter);
     }
 }
